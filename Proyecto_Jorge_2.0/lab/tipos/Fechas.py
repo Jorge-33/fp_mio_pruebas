@@ -91,4 +91,24 @@ class Fecha:
         else:
             return 31
     
-    
+    @staticmethod
+    def parse2(fecha_str: str):
+        try:
+            if fecha_str.startswith("[") and fecha_str.endswith("]"):
+                # Eliminar los corchetes "[" y "]" del formato
+                fecha_str = fecha_str[1:-1]
+
+                # Dividir la cadena en partes usando "/" como separador
+                partes = fecha_str.split("/")
+                if len(partes) == 3:
+                    día = int(partes[0])
+                    mes = int(partes[1])
+                    año = int(partes[2])
+                    
+                    if 1 <= mes <= 12 and 1 <= día <= Fecha.días_en_mes(año, mes):
+                        return Fecha(año, mes, día)
+        
+        except (ValueError, IndexError):
+            pass
+        
+        return None
